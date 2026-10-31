@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#11120e">
+    <title>Financeiro | Fut Duros e Caloteiros</title>
+    <link rel="stylesheet" href="financeiro.css">
+    <script src="financeiro.js" defer></script>
+</head>
+<body>
+    <nav class="menu-navegacao" aria-label="Navegação principal">
+        <a class="marca" href="index.html"><span class="marca-bola" aria-hidden="true">⚽</span> FUT <strong>DUROS</strong></a>
+        <div class="links-navegacao">
+            <a href="index.html">Home</a>
+            <a href="proximobaba.html">Próximo baba</a>
+            <a class="ativo" href="financeiro.html" aria-current="page">Financeiro</a>
+            <a href="resenha.html">Resenha</a>
+            <a href="configurações.html">Configurações</a>
+        </div>
+    </nav>
+
+    <main class="conteudo-principal">
+        <header class="cabecalho-pagina">
+            <p class="sobretitulo"><span class="ponto-ao-vivo" aria-hidden="true"></span> CONTAS DO TIME, SEM CAÔ</p>
+            <h1>Mensalidade <span>em dia.</span></h1>
+            <p class="introducao">Consulte o Pix e acompanhe quem já acertou a mensalidade do baba.</p>
+        </header>
+
+        <p id="aviso-aplicacao" class="aviso-aplicacao" role="status" aria-live="polite"></p>
+
+        <section class="cartao pix-cartao" aria-labelledby="titulo-pix">
+            <div class="pix-conteudo">
+                <span class="icone-pix" aria-hidden="true">PIX</span>
+                <div class="pix-texto">
+                    <p class="rotulo">PAGUE SUA MENSALIDADE</p>
+                    <h2 id="titulo-pix">Chave Pix do baba</h2>
+                    <p>Copie a chave, faça o pagamento no seu banco e avise quem organiza o time.</p>
+                </div>
+            </div>
+            <div class="chave-pix">
+                <code id="chave-pix">83fa8377-b601-491b-acb8-2a44ada42d9d</code>
+                <button class="botao botao-amarelo botao-copiar" id="botao-copiar-pix" type="button" aria-label="Copiar chave Pix">
+                    <span id="rotulo-copiar">Copiar chave</span><span aria-hidden="true">▣</span>
+                </button>
+            </div>
+            <p class="pix-aviso">Depois de pagar, peça ao responsável para atualizar sua situação na lista. O site não confirma transferências automaticamente.</p>
+        </section>
+
+        <section class="secao-mensalidade" aria-labelledby="titulo-lista">
+            <div class="titulo-secao">
+                <div>
+                    <p class="rotulo">ACOMPANHAMENTO DA GALERA</p>
+                    <h2 id="titulo-lista">Lista de mensalidades</h2>
+                </div>
+                <label class="seletor-mes">
+                    <span>Mês de referência</span>
+                    <input id="mes-referencia" type="month" aria-label="Mês de referência">
+                </label>
+            </div>
+
+            <div class="resumo-pagamentos" aria-live="polite">
+                <div class="resumo-item">
+                    <span class="resumo-icone" aria-hidden="true">♟</span>
+                    <span class="resumo-dados"><span class="resumo-rotulo">JOGADORES</span><strong id="total-jogadores">0</strong></span>
+                </div>
+                <div class="resumo-item resumo-item-pagos">
+                    <span class="resumo-icone" aria-hidden="true">✓</span>
+                    <span class="resumo-dados"><span class="resumo-rotulo">PAGARAM</span><strong id="total-pagos">0</strong></span>
+                </div>
+                <div class="resumo-item resumo-item-pendentes">
+                    <span class="resumo-icone" aria-hidden="true">◷</span>
+                    <span class="resumo-dados"><span class="resumo-rotulo">PENDENTES</span><strong id="total-pendentes">0</strong></span>
+                </div>
+                <div class="progresso-pagamentos" role="img" aria-label="Progresso de pagamentos">
+                    <div class="progresso-cabecalho"><span>Progresso do mês</span><strong id="percentual-pago">0%</strong></div>
+                    <div class="trilho-progresso"><span id="barra-progresso"></span></div>
+                </div>
+            </div>
+
+            <section class="cartao formulario-cartao" aria-labelledby="titulo-adicionar">
+                <div class="titulo-formulario">
+                    <span class="adicionar-icone" aria-hidden="true">+</span>
+                    <div><h3 id="titulo-adicionar">Adicionar à lista</h3><p>Cadastre a galera para acompanhar o mês.</p></div>
+                </div>
+                <form id="formulario-jogador" class="formulario-jogador">
+                    <label class="campo campo-nome">
+                        <span>Nome do jogador</span>
+                        <input id="nome-jogador" name="name" type="text" maxlength="50" placeholder="Ex.: João Silva" autocomplete="name" required>
+                    </label>
+                    <label class="campo campo-situacao">
+                        <span>Situação deste mês</span>
+                        <select id="situacao-inicial" name="status">
+                            <option value="pending">Ainda não pagou</option>
+                            <option value="paid">Já pagou</option>
+                        </select>
+                    </label>
+                    <button class="botao botao-amarelo botao-adicionar" type="submit">Adicionar jogador <span aria-hidden="true">→</span></button>
+                </form>
+            </section>
+
+            <div class="listas-pagamento">
+                <section class="cartao lista-cartao" aria-labelledby="titulo-pagos">
+                    <div class="titulo-lista">
+                        <span class="indicador indicador-pago" aria-hidden="true">✓</span>
+                        <div><h3 id="titulo-pagos">Já pagaram</h3><p>Mensalidade confirmada pelo responsável</p></div>
+                        <span id="quantidade-pagos" class="quantidade">0</span>
+                    </div>
+                    <ul id="lista-pagos" class="lista-jogadores"></ul>
+                    <p id="vazio-pagos" class="lista-vazia">Nenhum pagamento registrado neste mês.</p>
+                </section>
+
+                <section class="cartao lista-cartao" aria-labelledby="titulo-pendentes">
+                    <div class="titulo-lista">
+                        <span class="indicador indicador-pendente" aria-hidden="true">◷</span>
+                        <div><h3 id="titulo-pendentes">Ainda não pagaram</h3><p>Mensalidades pendentes</p></div>
+                        <span id="quantidade-pendentes" class="quantidade">0</span>
+                    </div>
+                    <ul id="lista-pendentes" class="lista-jogadores"></ul>
+                    <p id="vazio-pendentes" class="lista-vazia">Ninguém está pendente. Lista limpa!</p>
+                </section>
+            </div>
+        </section>
+
+        <footer class="rodape-pagina"><span aria-hidden="true">⚽</span> Joga limpo. Resenha sempre.</footer>
+    </main>
+</body>
+</html>

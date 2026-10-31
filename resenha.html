@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#11120e">
+    <title>Resenha | Fut Duros e Caloteiros</title>
+    <link rel="stylesheet" href="resenha.css">
+    <script src="resenha.js" defer></script>
+</head>
+<body>
+    <nav class="menu-navegacao" aria-label="Navegação principal">
+        <a class="marca" href="index.html"><span class="marca-bola" aria-hidden="true">⚽</span> FUT <strong>DUROS</strong></a>
+        <div class="links-navegacao">
+            <a href="index.html">Home</a>
+            <a href="proximobaba.html">Próximo baba</a>
+            <a href="financeiro.html">Financeiro</a>
+            <a class="ativo" href="resenha.html" aria-current="page">Resenha</a>
+            <a href="configurações.html">Configurações</a>
+        </div>
+    </nav>
+
+    <main class="conteudo-principal">
+        <header class="cabecalho-pagina">
+            <p class="sobretitulo"><span class="ponto-ao-vivo" aria-hidden="true"></span> A RESENHA OFICIAL DA GALERA</p>
+            <h1>Resenha <span>do baba.</span></h1>
+            <p class="introducao">Resultados, números, aniversários e o próximo churrasco. Tudo da turma num só lugar.</p>
+        </header>
+        <p id="aviso-aplicacao" class="aviso-aplicacao" role="status" aria-live="polite"></p>
+
+        <nav class="atalhos-resenha" aria-label="Seções da resenha">
+            <a href="#rodadas">Rodadas</a>
+            <a href="#aniversariantes">Aniversariantes</a>
+            <a href="#rankings">Rankings</a>
+            <a href="#churrascos">Churrascos</a>
+        </nav>
+
+        <section id="rodadas" class="secao-resenha" aria-labelledby="titulo-rodadas">
+            <div class="cabecalho-secao">
+                <div>
+                    <p class="rotulo">PLACAR E DESEMPENHO</p>
+                    <h2 id="titulo-rodadas">Rodadas e últimos babas</h2>
+                </div>
+                <label class="seletor-rodada">
+                    <span>Selecionar rodada</span>
+                    <select id="seletor-rodada" aria-label="Selecionar rodada">
+                        <option value="all">Todas as rodadas</option>
+                    </select>
+                </label>
+            </div>
+
+            <div id="resumo-rodada" class="resumo-rodada">
+                <span class="bola-resumo" aria-hidden="true">⚽</span>
+                <span id="texto-resumo-rodada">Registre os resultados para começar o histórico do baba.</span>
+                <span id="quantidade-rodadas" class="contador">0 jogos</span>
+            </div>
+
+            <div id="lista-babas" class="lista-babas"></div>
+            <p id="vazio-babas" class="estado-vazio">Ainda não tem baba registrado. Adicione a primeira rodada abaixo.</p>
+
+            <details class="cartao formulario-detalhes">
+                <summary><span class="mais-icone" aria-hidden="true">+</span><span>Registrar resultado de um baba</span></summary>
+                <form id="formulario-baba" class="formulario-baba">
+                    <div class="campos-formulario">
+                        <label class="campo">
+                            <span>Rodada</span>
+                            <input id="numero-rodada" name="round" type="number" min="1" step="1" placeholder="Ex.: 1" required>
+                        </label>
+                        <label class="campo">
+                            <span>Data do baba</span>
+                            <input id="data-baba" name="date" type="date" required>
+                        </label>
+                        <label class="campo campo-local">
+                            <span>Local ou nome do jogo</span>
+                            <input id="local-baba" name="location" type="text" maxlength="70" placeholder="Ex.: Baba de domingo · Campo do bairro" required>
+                        </label>
+                        <label class="campo campo-placar">
+                            <span>Placar</span>
+                            <input id="placar-baba" name="score" type="text" inputmode="numeric" maxlength="7" placeholder="3 x 2" pattern="[0-9]{1,2}\s*[xX:]\s*[0-9]{1,2}" required>
+                        </label>
+                    </div>
+                    <div class="titulo-desempenho">
+                        <h3>Desempenho dos jogadores</h3>
+                        <p>Marque quem jogou e informe os números. A nota vai de 0 a 10.</p>
+                    </div>
+                    <div id="grade-desempenho" class="grade-desempenho"></div>
+                    <p id="sem-jogadores" class="lista-vazia">Cadastre os jogadores abaixo antes de registrar um resultado.</p>
+                    <div class="botoes-formulario">
+                        <button id="botao-salvar-baba" class="botao botao-amarelo" type="submit">Salvar resultado <span aria-hidden="true">→</span></button>
+                        <span class="ajuda-formulario">As estatísticas alimentam os rankings da rodada selecionada.</span>
+                    </div>
+                </form>
+            </details>
+        </section>
+
+        <section id="aniversariantes" class="secao-resenha" aria-labelledby="titulo-aniversariantes">
+            <div class="cabecalho-secao">
+                <div>
+                    <p class="rotulo">APAGA AS VELINHAS!</p>
+                    <h2 id="titulo-aniversariantes">Aniversariantes do mês</h2>
+                </div>
+                <span id="mes-aniversarios" class="etiqueta-agenda"></span>
+            </div>
+            <div id="lista-aniversariantes" class="lista-aniversariantes"></div>
+            <p id="vazio-aniversariantes" class="estado-vazio">Nenhum aniversariante cadastrado para este mês. Adicione as datas de nascimento da turma.</p>
+        </section>
+
+        <section id="rankings" class="secao-resenha" aria-labelledby="titulo-rankings">
+            <div class="cabecalho-secao">
+                <div>
+                    <p class="rotulo">QUEM TÁ VOANDO NO CAMPO?</p>
+                    <h2 id="titulo-rankings">Rankings do baba</h2>
+                </div>
+                <span id="escopo-ranking" class="escopo-ranking">Todas as rodadas</span>
+            </div>
+            <div class="abas-ranking" role="tablist" aria-label="Categoria do ranking">
+                <button class="aba-ranking ativa" id="aba-gols" type="button" role="tab" aria-selected="true" aria-controls="conteudo-ranking" data-ranking="goals">⚽ Gols</button>
+                <button class="aba-ranking" id="aba-assistencias" type="button" role="tab" aria-selected="false" aria-controls="conteudo-ranking" data-ranking="assists">↗ Assistências</button>
+                <button class="aba-ranking" id="aba-notas" type="button" role="tab" aria-selected="false" aria-controls="conteudo-ranking" data-ranking="rating">★ Notas</button>
+            </div>
+            <div id="conteudo-ranking" class="cartao ranking-cartao" role="tabpanel" aria-labelledby="aba-gols">
+                <div id="lista-ranking" class="lista-ranking"></div>
+                <p id="vazio-ranking" class="lista-vazia">Registre os resultados dos jogos para montar o ranking.</p>
+            </div>
+        </section>
+
+        <section class="secao-resenha" aria-labelledby="titulo-jogadores">
+            <details class="cartao formulario-detalhes">
+                <summary><span class="mais-icone" aria-hidden="true">+</span><span id="titulo-jogadores">Gerenciar jogadores e aniversários</span><span id="total-cadastrados" class="contador">0 jogadores</span></summary>
+                <form id="formulario-jogador" class="formulario-jogador">
+                    <label class="campo">
+                        <span>Nome do jogador</span>
+                        <input id="nome-jogador" name="name" type="text" maxlength="50" placeholder="Ex.: João Silva" required>
+                    </label>
+                    <label class="campo">
+                        <span>Data de nascimento</span>
+                        <input id="nascimento-jogador" name="birthday" type="date">
+                    </label>
+                    <button class="botao botao-amarelo" type="submit">Adicionar jogador <span aria-hidden="true">→</span></button>
+                </form>
+                <p id="vazio-elenco" class="lista-vazia">Nenhum jogador cadastrado ainda.</p>
+                <ul id="lista-elenco" class="lista-elenco"></ul>
+            </details>
+        </section>
+
+        <section id="churrascos" class="secao-resenha" aria-labelledby="titulo-churrascos">
+            <div class="cabecalho-secao">
+                <div>
+                    <p class="rotulo">DEPOIS DO APITO, VEM A RESENHA</p>
+                    <h2 id="titulo-churrascos">Churrascos marcados</h2>
+                </div>
+                <span id="quantidade-churrascos" class="contador">0 marcados</span>
+            </div>
+            <div id="lista-churrascos" class="lista-churrascos"></div>
+            <p id="vazio-churrascos" class="estado-vazio">Nenhum churrasco marcado. Já escolhe a data e chama a turma!</p>
+
+            <details class="cartao formulario-detalhes">
+                <summary><span class="mais-icone" aria-hidden="true">+</span><span>Marcar churrasco e dividir os valores</span></summary>
+                <form id="formulario-churrasco" class="formulario-churrasco">
+                    <div class="campos-formulario">
+                        <label class="campo">
+                            <span>Data</span>
+                            <input id="data-churrasco" name="date" type="date" required>
+                        </label>
+                        <label class="campo">
+                            <span>Local</span>
+                            <input id="local-churrasco" name="location" type="text" maxlength="70" placeholder="Ex.: Casa do parceiro" required>
+                        </label>
+                        <label class="campo">
+                            <span>Valor total (R$)</span>
+                            <input id="valor-churrasco" name="amount" type="number" min="0.01" max="1000000" step="0.01" placeholder="0,00" required>
+                        </label>
+                    </div>
+                    <label class="campo campo-convidados">
+                        <span>Quem vai participar? <span class="texto-suave">(um nome por linha)</span></span>
+                        <textarea id="convidados-churrasco" name="attendees" rows="4" maxlength="2000" placeholder="João&#10;Pedro&#10;Rafa" required></textarea>
+                    </label>
+                    <p class="ajuda-formulario">O valor total será dividido igualmente entre os participantes informados.</p>
+                    <div class="botoes-formulario">
+                        <button class="botao botao-amarelo" type="submit">Salvar churrasco <span aria-hidden="true">→</span></button>
+                    </div>
+                </form>
+            </details>
+        </section>
+
+        <footer class="rodape-pagina"><span aria-hidden="true">⚽</span> Joga limpo. Resenha sempre.</footer>
+    </main>
+</body>
+</html>

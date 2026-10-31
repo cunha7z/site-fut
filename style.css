@@ -1,0 +1,533 @@
+:root {
+    color-scheme: dark;
+    --fundo: #11120e;
+    --superficie: #191a15;
+    --amarelo: #f2d13d;
+    --amarelo-claro: #ffe66c;
+    --texto: #f4f3ec;
+    --texto-suave: #a7a79b;
+    --borda: #303128;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: var(--texto);
+    background: var(--fundo);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background:
+        radial-gradient(ellipse at 50% 25%, rgb(242 209 61 / 8%), transparent 34rem),
+        var(--fundo);
+}
+
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a:focus-visible {
+    outline: 2px solid var(--amarelo-claro);
+    outline-offset: 4px;
+}
+
+.menu-navegacao {
+    display: flex;
+    min-height: 76px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 0 max(6vw, calc((100vw - 1120px) / 2));
+    border-bottom: 1px solid rgb(255 255 255 / 6%);
+}
+
+.marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--texto);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.marca strong {
+    color: var(--amarelo);
+    font-weight: 700;
+}
+
+.marca-bola {
+    font-size: 21px;
+}
+
+.links-navegacao {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.links-navegacao a {
+    position: relative;
+    padding: 29px 0 27px;
+    color: var(--texto-suave);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color .18s ease;
+}
+
+.links-navegacao a:hover,
+.links-navegacao a.ativo {
+    color: var(--amarelo-claro);
+}
+
+.links-navegacao a.ativo::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: var(--amarelo);
+    content: '';
+}
+
+.conteudo-principal {
+    width: min(100% - 40px, 1040px);
+    margin: 0 auto;
+    padding: clamp(42px, 8vh, 78px) 0 34px;
+}
+
+.painel-entrada {
+    position: relative;
+    display: grid;
+    min-height: 575px;
+    overflow: hidden;
+    align-items: center;
+    border: 1px solid var(--borda);
+    border-radius: 16px;
+    background:
+        radial-gradient(ellipse at 78% 45%, rgb(242 209 61 / 7%), transparent 24rem),
+        linear-gradient(145deg, rgb(255 255 255 / 2%), transparent 58%),
+        var(--superficie);
+    isolation: isolate;
+}
+
+.conteudo-painel {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 630px);
+    padding: 50px 64px;
+}
+
+.sobretitulo,
+.rotulo-instagram {
+    margin: 0;
+    color: var(--texto-suave);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+}
+
+.sobretitulo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--amarelo);
+}
+
+.ponto-ao-vivo {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--amarelo);
+    box-shadow: 0 0 12px rgb(242 209 61 / 65%);
+}
+
+.logo-container {
+    display: grid;
+    width: 80px;
+    height: 80px;
+    margin-top: 30px;
+    place-items: center;
+    border: 1px solid rgb(242 209 61 / 24%);
+    border-radius: 15px;
+    background: rgb(242 209 61 / 7%);
+    box-shadow: 0 10px 38px rgb(0 0 0 / 20%);
+}
+
+.logo {
+    display: block;
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+}
+
+.conteudo-painel h1 {
+    margin: 23px 0 11px;
+    font-size: clamp(42px, 6vw, 66px);
+    font-weight: 700;
+    letter-spacing: -.06em;
+    line-height: 1.02;
+}
+
+.conteudo-painel h1 span {
+    color: var(--amarelo);
+}
+
+.introducao {
+    max-width: 390px;
+    margin: 0;
+    color: var(--texto-suave);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.botao {
+    display: inline-flex;
+    min-height: 45px;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 0 17px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background .18s ease, transform .18s ease;
+}
+
+.botao:hover {
+    transform: translateY(-2px);
+}
+
+.botao-amarelo {
+    background: var(--amarelo);
+    color: #17170f;
+}
+
+.botao-amarelo:hover {
+    background: var(--amarelo-claro);
+}
+
+.link-instagram {
+    display: flex;
+    width: fit-content;
+    min-height: 58px;
+    align-items: center;
+    gap: 11px;
+    margin-top: 25px;
+    padding: 8px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: rgb(17 18 14 / 45%);
+    color: var(--texto);
+    text-decoration: none;
+    transition: border-color .18s ease, background .18s ease;
+}
+
+.link-instagram:hover {
+    border-color: rgb(242 209 61 / 45%);
+    background: rgb(242 209 61 / 6%);
+}
+
+.icone-instagram {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid rgb(242 209 61 / 30%);
+    border-radius: 9px;
+    color: var(--amarelo);
+    font-size: 24px;
+    line-height: 1;
+}
+
+.texto-instagram {
+    display: grid;
+    gap: 3px;
+}
+
+.rotulo-instagram {
+    font-size: 8px;
+}
+
+.link-instagram strong {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.seta-instagram {
+    margin-left: 9px;
+    color: var(--texto-suave);
+}
+
+.decoracoes-futebol {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.objeto-futebol,
+.brilho {
+    position: absolute;
+    display: block;
+    user-select: none;
+}
+
+.bola-flutuante {
+    top: 17%;
+    right: 14%;
+    font-size: clamp(72px, 11vw, 120px);
+    filter: drop-shadow(0 18px 22px rgb(0 0 0 / 35%));
+    animation: bola-flutua 5s ease-in-out infinite;
+}
+
+.apito-flutuante {
+    top: 61%;
+    right: 11%;
+    font-size: clamp(42px, 6vw, 65px);
+    filter: drop-shadow(0 12px 16px rgb(0 0 0 / 30%));
+    animation: objeto-balanceia 4.5s ease-in-out infinite;
+}
+
+.bola-pequena {
+    right: 34%;
+    bottom: 13%;
+    font-size: 37px;
+    filter: drop-shadow(0 8px 12px rgb(0 0 0 / 30%));
+    animation: bola-orbita 7s ease-in-out infinite;
+}
+
+.brilho {
+    color: var(--amarelo);
+    opacity: .7;
+}
+
+.brilho-um {
+    top: 21%;
+    right: 37%;
+    font-size: 20px;
+    animation: brilho-pulsa 2.8s ease-in-out infinite;
+}
+
+.brilho-dois {
+    right: 9%;
+    bottom: 22%;
+    font-size: 24px;
+    animation: brilho-pulsa 3.2s ease-in-out infinite reverse;
+}
+
+.etiqueta-vertical {
+    position: absolute;
+    right: 27px;
+    bottom: 25px;
+    color: #77786e;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    writing-mode: vertical-rl;
+}
+
+.rodape-pagina {
+    padding: 27px 0 0;
+    color: #77786e;
+    font-size: 11px;
+    text-align: center;
+}
+
+.rodape-pagina span {
+    margin-right: 5px;
+    color: var(--amarelo);
+}
+
+@keyframes bola-flutua {
+    0%,
+    100% {
+        transform: translateY(0) rotate(-8deg);
+    }
+
+    50% {
+        transform: translateY(-19px) rotate(12deg);
+    }
+}
+
+@keyframes objeto-balanceia {
+    0%,
+    100% {
+        transform: translateY(0) rotate(7deg);
+    }
+
+    50% {
+        transform: translateY(-13px) rotate(-8deg);
+    }
+}
+
+@keyframes bola-orbita {
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0);
+    }
+
+    50% {
+        transform: translate(-13px, -17px) rotate(130deg);
+    }
+}
+
+@keyframes brilho-pulsa {
+    0%,
+    100% {
+        opacity: .35;
+        transform: scale(.85);
+    }
+
+    50% {
+        opacity: .9;
+        transform: scale(1.15);
+    }
+}
+
+@media (max-width: 760px) {
+    .menu-navegacao {
+        min-height: 65px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0;
+        padding: 12px 18px 0;
+    }
+
+    .marca {
+        justify-content: center;
+        width: 100%;
+        padding-bottom: 8px;
+    }
+
+    .links-navegacao {
+        width: 100%;
+        justify-content: center;
+        gap: clamp(11px, 3.5vw, 22px);
+        overflow-x: auto;
+    }
+
+    .links-navegacao a {
+        padding: 11px 0 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .conteudo-principal {
+        width: min(100% - 30px, 620px);
+        padding-top: 40px;
+    }
+
+    .painel-entrada {
+        min-height: 0;
+    }
+
+    .conteudo-painel {
+        width: 100%;
+        padding: 40px 32px;
+    }
+
+    .bola-flutuante {
+        top: 12%;
+        right: 8%;
+        opacity: .28;
+    }
+
+    .apito-flutuante {
+        top: auto;
+        right: 7%;
+        bottom: 13%;
+        opacity: .5;
+    }
+
+    .bola-pequena {
+        right: 25%;
+        bottom: 8%;
+    }
+
+    .etiqueta-vertical {
+        right: 12px;
+        bottom: 18px;
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .conteudo-painel {
+        padding: 32px 22px;
+    }
+
+    .sobretitulo {
+        max-width: 85%;
+        font-size: 8px;
+    }
+
+    .logo-container {
+        width: 68px;
+        height: 68px;
+        margin-top: 25px;
+    }
+
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .conteudo-painel h1 {
+        font-size: clamp(39px, 11vw, 52px);
+    }
+
+    .introducao {
+        max-width: 310px;
+        font-size: 13px;
+    }
+
+    .bola-flutuante {
+        top: 16%;
+        right: 3%;
+        font-size: 67px;
+        opacity: .2;
+    }
+
+    .apito-flutuante {
+        top: auto;
+        right: 5%;
+        bottom: 12%;
+        font-size: 42px;
+        opacity: .35;
+    }
+
+    .bola-pequena {
+        right: 22%;
+        bottom: 7%;
+        font-size: 29px;
+    }
+
+    .etiqueta-vertical {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#11120e">
+    <title>Próximo baba | Fut Duros e Caloteiros</title>
+    <link rel="stylesheet" href="proximobaba.css">
+    <script src="proximobaba.js" defer></script>
+</head>
+<body>
+    <nav class="menu-navegacao" aria-label="Navegação principal">
+        <a class="marca" href="index.html"><span class="marca-bola" aria-hidden="true">⚽</span> FUT <strong>DUROS</strong></a>
+        <div class="links-navegacao">
+            <a href="index.html">Home</a>
+            <a class="ativo" href="proximobaba.html" aria-current="page">Próximo baba</a>
+            <a href="financeiro.html">Financeiro</a>
+            <a href="resenha.html">Resenha</a>
+            <a href="configurações.html">Configurações</a>
+        </div>
+    </nav>
+
+    <main class="conteudo-principal">
+        <header class="cabecalho-pagina">
+            <p class="sobretitulo"><span class="ponto-ao-vivo" aria-hidden="true"></span> NOSSO PRÓXIMO ENCONTRO</p>
+            <h1>Dia de <span>baba.</span></h1>
+            <p class="introducao">Organize a pelada, confirme sua presença e deixe o time na resenha.</p>
+        </header>
+        <p id="aviso-aplicacao" class="aviso-aplicacao" role="status" aria-live="polite"></p>
+
+        <section class="cartao agenda-cartao" aria-labelledby="titulo-agenda">
+            <div class="titulo-secao">
+                <div>
+                    <p class="rotulo">AGENDA DO TIME</p>
+                    <h2 id="titulo-agenda">Próxima pelada</h2>
+                </div>
+                <span class="etiqueta-agenda">⚽ &nbsp; FUTEBOL & RESENHA</span>
+            </div>
+            <div id="estado-vazio" class="estado-vazio">
+                <span class="icone-vazio" aria-hidden="true">⚽</span>
+                <h3>Ainda não tem baba marcado</h3>
+                <p>Combine o próximo jogo e chame a galera para confirmar presença.</p>
+                <button class="botao botao-amarelo" id="botao-primeira-pelada" type="button">Marcar uma pelada <span aria-hidden="true">→</span></button>
+            </div>
+            <div id="detalhes-pelada" class="detalhes-pelada" hidden>
+                <div class="resumo-pelada">
+                    <div class="data-destaque">
+                        <span id="dia-semana" class="dia-semana"></span>
+                        <strong id="dia-numero" class="dia-numero"></strong>
+                        <span id="mes-ano" class="mes-ano"></span>
+                    </div>
+                    <div class="dados-pelada">
+                        <p class="rotulo">DIA DE JOGO</p>
+                        <h3 id="data-formatada"></h3>
+                        <div class="informacoes-pelada">
+                            <span><span aria-hidden="true">◷</span> <span id="horario-formatado"></span></span>
+                            <span><span aria-hidden="true">⌖</span> <span id="local-formatado"></span></span>
+                        </div>
+                    </div>
+                    <div class="acoes-agenda">
+                        <button class="botao botao-contorno" id="botao-editar-pelada" type="button">Editar</button>
+                        <button class="botao botao-excluir" id="botao-excluir-pelada" type="button">Cancelar pelada</button>
+                    </div>
+                </div>
+                <div class="previsao" id="previsao" aria-live="polite">
+                    <div class="icone-previsao" aria-hidden="true">☀</div>
+                    <div class="texto-previsao">
+                        <span class="rotulo">PREVISÃO DO TEMPO · SALVADOR</span>
+                        <p id="texto-previsao">Buscando previsão para o dia do jogo...</p>
+                    </div>
+                    <span id="temperaturas" class="temperaturas"></span>
+                </div>
+            </div>
+        </section>
+
+        <section id="formulario-pelada-secao" class="cartao formulario-cartao" aria-labelledby="titulo-formulario-pelada" hidden>
+            <div class="titulo-secao">
+                <div>
+                    <p class="rotulo">BORA ORGANIZAR</p>
+                    <h2 id="titulo-formulario-pelada">Marcar uma pelada</h2>
+                </div>
+            </div>
+            <form id="formulario-pelada">
+                <div class="campos-pelada">
+                    <label class="campo">
+                        <span>Data</span>
+                        <input id="data-pelada" name="date" type="date" required>
+                    </label>
+                    <label class="campo">
+                        <span>Horário</span>
+                        <input id="horario-pelada" name="time" type="time" required>
+                    </label>
+                    <label class="campo campo-local">
+                        <span>Local do baba</span>
+                        <input id="local-pelada" name="location" type="text" maxlength="80" placeholder="Ex.: Campo do bairro" required>
+                    </label>
+                </div>
+                <p class="ajuda-formulario">A previsão é consultada para Salvador (BA). Você pode marcar o jogo em outro local.</p>
+                <div class="botoes-formulario">
+                    <button class="botao botao-amarelo" id="botao-salvar-pelada" type="submit">Salvar pelada <span aria-hidden="true">→</span></button>
+                    <button class="botao botao-texto" id="botao-cancelar-formulario" type="button">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="presencas-secao" class="secao-presencas" aria-labelledby="titulo-presencas" hidden>
+            <div class="titulo-secao titulo-presencas">
+                <div>
+                    <p class="rotulo">A LISTA DO JOGO</p>
+                    <h2 id="titulo-presencas">Quem vai colar?</h2>
+                </div>
+                <span id="total-confirmados" class="contador">0 confirmados</span>
+            </div>
+            <div class="colunas-presenca">
+                <section class="cartao lista-cartao" aria-labelledby="titulo-confirmados">
+                    <div class="titulo-lista">
+                        <span class="indicador indicador-presente" aria-hidden="true">✓</span>
+                        <div><h3 id="titulo-confirmados">Tamo dentro</h3><p>Confirmaram presença</p></div>
+                        <span id="quantidade-presentes" class="quantidade">0</span>
+                    </div>
+                    <ul id="lista-presentes" class="lista-jogadores"></ul>
+                    <p id="vazio-presentes" class="lista-vazia">Ninguém confirmou ainda. Seja o primeiro!</p>
+                </section>
+                <section class="cartao lista-cartao lista-ausentes-cartao" aria-labelledby="titulo-ausentes">
+                    <div class="titulo-lista">
+                        <span class="indicador indicador-ausente" aria-hidden="true">—</span>
+                        <div><h3 id="titulo-ausentes">Fica pra próxima</h3><p>Não vão conseguir ir</p></div>
+                        <span id="quantidade-ausentes" class="quantidade">0</span>
+                    </div>
+                    <ul id="lista-ausentes" class="lista-jogadores"></ul>
+                    <p id="vazio-ausentes" class="lista-vazia">Ainda não há ausências informadas.</p>
+                </section>
+            </div>
+        </section>
+
+        <section id="confirmacao-secao" class="cartao confirmacao-cartao" aria-labelledby="titulo-confirmacao" hidden>
+            <div class="titulo-secao">
+                <div>
+                    <p class="rotulo">E AÍ, VAI JOGAR?</p>
+                    <h2 id="titulo-confirmacao">Confirme sua presença</h2>
+                </div>
+            </div>
+            <form id="formulario-presenca">
+                <div class="campos-presenca">
+                    <label class="campo campo-nome">
+                        <span>Seu nome</span>
+                        <input id="nome-jogador" name="name" type="text" maxlength="40" placeholder="Como a galera te chama?" autocomplete="name" required>
+                    </label>
+                    <fieldset class="campo campo-status">
+                        <legend>Sua resposta</legend>
+                        <div class="opcoes-presenca">
+                            <label class="opcao-presenca">
+                                <input type="radio" name="status" value="present" checked>
+                                <span class="opcao-presenca-conteudo"><span aria-hidden="true">✓</span> Tô dentro</span>
+                            </label>
+                            <label class="opcao-presenca">
+                                <input type="radio" name="status" value="absent">
+                                <span class="opcao-presenca-conteudo"><span aria-hidden="true">×</span> Não vou</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                    <label class="campo campo-motivo" id="campo-motivo" hidden>
+                        <span>Motivo da ausência</span>
+                        <input id="motivo-ausencia" name="reason" type="text" maxlength="100" placeholder="Ex.: compromisso, trabalho...">
+                    </label>
+                </div>
+                <div class="botoes-formulario">
+                    <button class="botao botao-amarelo" type="submit">Salvar resposta <span aria-hidden="true">→</span></button>
+                    <p class="ajuda-formulario">Já respondeu? Envie novamente com o mesmo nome para atualizar sua resposta.</p>
+                </div>
+            </form>
+            <p id="mensagem-status" class="mensagem-status" role="status" aria-live="polite"></p>
+        </section>
+
+        <footer class="rodape-pagina"><span aria-hidden="true">⚽</span> Joga limpo. Resenha sempre.</footer>
+    </main>
+</body>
+</html>

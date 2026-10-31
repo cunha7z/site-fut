@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#11120e">
+    <meta name="description" content="Configure o elenco, as notificações e os horários do Fut Duros e Caloteiros.">
+    <title>Configurações | Fut Duros e Caloteiros</title>
+    <link rel="stylesheet" href="configuracoes.css">
+    <script src="configuracoes.js" defer></script>
+</head>
+<body>
+    <nav class="menu-navegacao" aria-label="Navegação principal">
+        <a class="marca" href="index.html"><span class="marca-bola" aria-hidden="true">⚽</span> FUT <strong>DUROS</strong></a>
+        <div class="links-navegacao">
+            <a href="index.html">Home</a>
+            <a href="proximobaba.html">Próximo baba</a>
+            <a href="financeiro.html">Financeiro</a>
+            <a href="resenha.html">Resenha</a>
+            <a class="ativo" href="configurações.html" aria-current="page">Configurações</a>
+        </div>
+    </nav>
+
+    <main class="conteudo-principal">
+        <header class="cabecalho-pagina">
+            <p class="sobretitulo"><span class="ponto-ao-vivo" aria-hidden="true"></span> ORGANIZE A NOSSA TURMA</p>
+            <h1>Configurações <span>do baba.</span></h1>
+            <p class="introducao">Elenco, avaliações, avisos e tudo pronto para separar os times.</p>
+        </header>
+        <p id="aviso-aplicacao" class="aviso-aplicacao" role="status" aria-live="polite"></p>
+
+        <nav class="atalhos-configuracoes" aria-label="Seções de configurações">
+            <a href="#elenco">Elenco</a>
+            <a href="#notificacoes">Notificações</a>
+            <a href="#agenda">Local e horários</a>
+            <a href="#sorteio">Sortear times</a>
+        </nav>
+
+        <section id="elenco" class="secao-configuracoes" aria-labelledby="titulo-elenco">
+            <div class="cabecalho-secao">
+                <div>
+                    <p class="rotulo">QUEM VAI PRO JOGO?</p>
+                    <h2 id="titulo-elenco">Elenco do baba</h2>
+                </div>
+                <span id="total-jogadores" class="etiqueta-contagem">0 jogadores</span>
+            </div>
+            <p class="texto-apoio">O elenco é compartilhado com a página Resenha. Atualize apelido, disponibilidade, posição e avaliação de cada jogador.</p>
+
+            <form id="formulario-jogador" class="cartao formulario-jogador">
+                <h3>Adicionar jogador</h3>
+                <div class="grade-campos">
+                    <label class="campo campo-amplo">
+                        <span>Nome do jogador</span>
+                        <input id="nome-jogador" name="name" type="text" maxlength="50" autocomplete="name" placeholder="Ex.: João Silva" required>
+                    </label>
+                    <label class="campo">
+                        <span>Apelido <small>(opcional)</small></span>
+                        <input id="apelido-jogador" name="nickname" type="text" maxlength="30" placeholder="Ex.: Jota">
+                    </label>
+                </div>
+                <div class="acoes-formulario">
+                    <button class="botao botao-amarelo" type="submit">Adicionar ao elenco <span aria-hidden="true">→</span></button>
+                </div>
+            </form>
+
+            <div id="lista-jogadores" class="lista-jogadores"></div>
+            <p id="elenco-vazio" class="estado-vazio" hidden>Nenhum jogador cadastrado ainda. Adicione o primeiro nome acima ou cadastre alguém pela página Resenha.</p>
+        </section>
+
+        <section id="notificacoes" class="secao-configuracoes" aria-labelledby="titulo-notificacoes">
+            <div class="cabecalho-secao">
+                <div>
+                    <p class="rotulo">NINGUÉM FICA DE FORA</p>
+                    <h2 id="titulo-notificacoes">Notificações</h2>
+                </div>
+                <span class="icone-secao" aria-hidden="true">🔔</span>
+            </div>
+            <form id="formulario-notificacoes" class="cartao formulario-configuracoes">
+                <label class="opcao-notificacao">
+                    <span><strong>Avisar quando uma pelada for marcada</strong><small>Exibe o próximo baba e pode enviar um aviso do navegador quando ele for cadastrado.</small></span>
+                    <input id="notificar-novo-jogo" type="checkbox">
+                </label>
+                <label class="opcao-notificacao">
+                    <span><strong>Lembrete antes do jogo</strong><small>Mostra um aviso quando o jogo estiver previsto para as próximas 24 horas.</small></span>
+                    <input id="notificar-lembrete" type="checkbox">
+                </label>
+                <div class="acoes-formulario">
+                    <button class="botao botao-amarelo" type="submit">Salvar notificações</button>
+                    <button id="botao-permissao-notificacao" class="botao botao-contorno" type="button">Ativar avisos do navegador</button>
+                </div>
+                <p id="status-permissao-notificacao" class="texto-apoio texto-status" aria-live="polite"></p>
+                <p id="resumo-notificacoes" class="texto-apoio texto-status" aria-live="polite"></p>
+                <p class="nota-local">Os avisos são verificados enquanto esta página estiver aberta. O site não envia notificações com o navegador fechado.</p>
+            </form>
+        </section>
+
+        <section id="agenda" class="secao-configuracoes" aria-labelledby="titulo-agenda">
+            <div class="cabecalho-secao">
+                <div>
+                    <p class="rotulo">DIA E PONTO DE ENCONTRO</p>
+                    <h2 id="titulo-agenda">Local e horários</h2>
+                </div>
+                <span class="icone-secao" aria-hidden="true">⌖</span>
+            </div>
+            <form id="formulario-agenda" class="cartao formulario-configuracoes">
+                <div class="grade-campos">
+                    <label class="campo">
+                        <span>Dia habitual</span>
+                        <select id="dia-baba" name="day">
+                            <option value="domingo">Domingo</option>
+                            <option value="segunda">Segunda-feira</option>
+                            <option value="terca">Terça-feira</option>
+                            <option value="quarta">Quarta-feira</option>
+                            <option value="quinta">Quinta-feira</option>
+                            <option value="sexta">Sexta-feira</option>
+                            <option value="sabado">Sábado</option>
+                        </select>
+                    </label>
+                    <label class="campo">
+                        <span>Horário do baba</span>
+                        <input id="horario-baba" name="time" type="time" required>
+                    </label>
+                    <label class="campo campo-amplo">
+                        <span>Local habitual</span>
+                        <input id="local-baba" name="location" type="text" maxlength="100" placeholder="Ex.: Campo do bairro" required>
+                    </label>
+                </div>
+                <div class="acoes-formulario">
+                    <button class="botao botao-amarelo" type="submit">Salvar local e horário</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="sorteio" class="secao-configuracoes" aria-labelledby="titulo-sorteio">
+            <div class="cabecalho-secao">
+                <div>
+                    <p class="rotulo">SORTEIO JUSTO, RESENHA GARANTIDA</p>
+                    <h2 id="titulo-sorteio">Separar os times</h2>
+                </div>
+                <span class="icone-secao" aria-hidden="true">⚽</span>
+            </div>
+            <div class="cartao painel-sorteio">
+                <div class="controles-sorteio">
+                    <label class="campo">
+                        <span>Quantidade de times</span>
+                        <select id="quantidade-times">
+                            <option value="2">2 times</option>
+                            <option value="3">3 times</option>
+                            <option value="4">4 times</option>
+                        </select>
+                    </label>
+                    <button id="botao-sortear" class="botao botao-amarelo" type="button">Sortear jogadores <span aria-hidden="true">↗</span></button>
+                </div>
+                <p class="texto-apoio">Só entram no sorteio jogadores marcados como disponíveis. O elenco é embaralhado e dividido com o máximo de equilíbrio no número de jogadores.</p>
+                <div id="resultado-sorteio" class="resultado-sorteio" aria-live="polite">
+                    <p class="estado-vazio">Cadastre jogadores e clique em “Sortear jogadores” para montar os times.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="rodape">⚽ Joga limpo. Resenha sempre.</footer>
+</body>
+</html>
