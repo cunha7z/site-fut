@@ -1,6 +1,8 @@
 'use strict';
 
 const STORAGE_KEY = 'fut-duros-mensalidades-v1';
+const ADMIN_STORAGE_KEY = 'fut-duros-admin-v1';
+const ADMIN_PASSWORD = 'futduros';
 const PIX_KEY = '83fa8377-b601-491b-acb8-2a44ada42d9d';
 const elements = {
     aviso: document.querySelector('#aviso-aplicacao'),
@@ -8,6 +10,8 @@ const elements = {
     formulario: document.querySelector('#formulario-jogador'),
     nome: document.querySelector('#nome-jogador'),
     situacaoInicial: document.querySelector('#situacao-inicial'),
+    botaoAdmin: document.querySelector('#botao-admin'),
+    statusAdmin: document.querySelector('#status-admin'),
     listaPagos: document.querySelector('#lista-pagos'),
     listaPendentes: document.querySelector('#lista-pendentes'),
     vazioPagos: document.querySelector('#vazio-pagos'),
@@ -24,6 +28,7 @@ const elements = {
 };
 
 let monthRecords = {};
+let isAdmin = false;
 let copyFeedbackTimeout;
 
 function currentMonth() {
@@ -41,6 +46,38 @@ function normalizeName(name) {
 
 function setWarning(message) {
     elements.aviso.textContent = message;
+}
+
+function loadAdminState() {
+    isAdmin = localStorage.getItem(ADMIN_STORAGE_KEY) === 'true';
+}
+
+function saveAdminState(nextState) {
+    isAdmin = nextState;
+    localStorage.setItem(ADMIN_STORAGE_KEY, String(nextState));
+}
+
+function applyAdminState() {
+    const paidOption = elements.situacaoInicial.querySelector('option[value="paid"]');
+    if (paidOption) {
+        paidOption.disabled = !isAdmin;
+    }
+
+    if (!isAdmin && elements.situacaoInicial.value === 'paid') {
+        elements.situacaoInicial.value = 'pending';
+    }
+
+    if (elements.botaoAdmin) {
+        elements.botaoAdmin.textContent = isAdmin ? 'Sair do modo admin' : 'Entrar como admin';
+    }
+
+    if (elements.statusAdmin) {
+        elements.statusAdmin.textContent = isAdmin ? 'Modo administrador ativo' : 'Modo visitante';
+    }
+}
+
+function canManagePaidPlayers() {
+    return isAdmin;
 }
 
 function loadRecords() {
@@ -164,6 +201,13 @@ function render() {
 }
 
 function addPlayer(name, status) {
+    if (status === 'paid' && !canManagePaidPlayers()) {
+        setWarning('Apenas o administrador pode cadastrar um jogador que já pagou a mensalidade.');
+        elements.situacaoInicial.value = 'pending';
+        applyAdminState();
+        return;
+    }
+
     const month = elements.mes.value;
     const currentRecords = monthRecords[month] || [];
     if (currentRecords.some((record) => normalizeName(record.name) === normalizeName(name))) {
@@ -203,6 +247,14 @@ function updatePlayer(recordId, action) {
 
     if (action === 'remove' && !window.confirm(`Remover ${record.name} da lista deste mês?`)) {
         return;
+    }
+
+    if (action !== 'remove') {
+        const nextStatus = record.status === 'paid' ? 'pending' : 'paid';
+        if (nextStatus === 'paid' && !canManagePaidPlayers()) {
+            setWarning('Apenas o administrador pode marcar um jogador como pago.');
+            return;
+        }
     }
 
     const updatedRecords = action === 'remove'
@@ -248,6 +300,8 @@ async function copyPixKey() {
     }
 }
 
+loadAdminState();
+applyAdminState();
 elements.mes.value = currentMonth();
 loadRecords();
 render();
@@ -261,6 +315,27 @@ elements.mes.addEventListener('change', () => {
 });
 
 elements.nome.addEventListener('input', () => elements.nome.setCustomValidity(''));
+
+elements.botaoAdmin.addEventListener('click', () => {
+    if (isAdmin) {
+        saveAdminState(false);
+        applyAdminState();
+        setWarning('Modo visitante ativado. Apenas o administrador pode cadastrar quem já pagou.');
+        return;
+    }
+
+    const senha = window.prompt('Digite a senha de administrador para liberar pagamentos confirmados:');
+    if (senha === null) return;
+
+    if (senha === ADMIN_PASSWORD) {
+        saveAdminState(true);
+        applyAdminState();
+        setWarning('Modo administrador ativado. Agora você pode cadastrar jogadores já pagantes.');
+        return;
+    }
+
+    setWarning('Senha incorreta. Somente o administrador pode adicionar quem já pagou.');
+});
 
 elements.formulario.addEventListener('submit', (event) => {
     event.preventDefault();

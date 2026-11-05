@@ -241,7 +241,10 @@ function makePlayerCard(player) {
     const actions = makeElement('div', 'acoes-perfil');
     const save = makeElement('button', 'botao botao-contorno', 'Salvar jogador');
     save.type = 'submit';
-    actions.append(save);
+    const remove = makeElement('button', 'botao botao-remover-jogador', 'Remover jogador');
+    remove.type = 'button';
+    remove.dataset.playerId = player.id;
+    actions.append(save, remove);
     form.append(actions);
     card.append(header, form);
     return card;
@@ -392,6 +395,21 @@ elements.listaJogadores.addEventListener('submit', (event) => {
     player.position = form.elements.position.value;
     player.rating = rating;
     if (saveSettings('Dados do jogador atualizados.')) renderPlayers();
+});
+
+elements.listaJogadores.addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-player-id]');
+    if (!button) return;
+
+    const player = state.players.find((item) => item.id === button.dataset.playerId);
+    if (!player || !window.confirm(`Remover ${player.name} do elenco? Os resultados já registrados serão mantidos.`)) return;
+
+    const roster = readResenhaRoster();
+    if (!saveRoster(roster.filter((item) => item.id !== player.id))) return;
+
+    state.players = state.players.filter((item) => item.id !== player.id);
+    saveSettings('Jogador removido do elenco. Os resultados já registrados foram mantidos.');
+    renderPlayers();
 });
 
 elements.formularioNotificacoes.addEventListener('submit', (event) => {

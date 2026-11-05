@@ -27,6 +27,10 @@
             <p class="introducao">Resultados, números, aniversários e o próximo churrasco. Tudo da turma num só lugar.</p>
         </header>
         <p id="aviso-aplicacao" class="aviso-aplicacao" role="status" aria-live="polite"></p>
+        <div class="controles-admin">
+            <button id="botao-admin" class="botao botao-contorno" type="button">Entrar como administrador</button>
+            <span id="status-admin" aria-live="polite">Modo visitante. Somente administradores podem registrar resultados e churrascos.</span>
+        </div>
 
         <nav class="atalhos-resenha" aria-label="Seções da resenha">
             <a href="#rodadas">Rodadas</a>
@@ -81,7 +85,7 @@
                     </div>
                     <div class="titulo-desempenho">
                         <h3>Desempenho dos jogadores</h3>
-                        <p>Marque quem jogou e informe os números. A nota vai de 0 a 10.</p>
+                        <p>Marque quem jogou e informe os números. A nota é calculada automaticamente de 0,0 a 10,0.</p>
                     </div>
                     <div id="grade-desempenho" class="grade-desempenho"></div>
                     <p id="sem-jogadores" class="lista-vazia">Cadastre os jogadores abaixo antes de registrar um resultado.</p>

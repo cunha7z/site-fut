@@ -2,8 +2,12 @@
 
 const STORAGE_KEY = 'fut-duros-resenha-v1';
 const ROUND_MATCH_LIMIT = 5;
+const ADMIN_STORAGE_KEY = 'fut-duros-admin-v1';
+const ADMIN_PASSWORD = 'futduros';
 const elements = {
     aviso: document.querySelector('#aviso-aplicacao'),
+    botaoAdmin: document.querySelector('#botao-admin'),
+    statusAdmin: document.querySelector('#status-admin'),
     seletorRodada: document.querySelector('#seletor-rodada'),
     textoResumoRodada: document.querySelector('#texto-resumo-rodada'),
     quantidadeRodadas: document.querySelector('#quantidade-rodadas'),
@@ -42,6 +46,7 @@ const elements = {
 
 let state = { players: [], matches: [], barbecues: [] };
 let activeRanking = 'goals';
+let isAdmin = false;
 
 function localDateString(date = new Date()) {
     const year = date.getFullYear();
@@ -56,6 +61,39 @@ function normalizeName(name) {
 
 function setWarning(message) {
     elements.aviso.textContent = message;
+}
+
+function loadAdminState() {
+    try {
+        isAdmin = localStorage.getItem(ADMIN_STORAGE_KEY) === 'true';
+    } catch (error) {
+        console.error('Não foi possível verificar o acesso de administrador.', error);
+        setWarning('Não foi possível verificar o acesso de administrador neste navegador.');
+    }
+}
+
+function saveAdminState(nextState) {
+    try {
+        localStorage.setItem(ADMIN_STORAGE_KEY, String(nextState));
+        isAdmin = nextState;
+        return true;
+    } catch (error) {
+        console.error('Não foi possível salvar o acesso de administrador.', error);
+        setWarning('Não foi possível salvar o acesso de administrador neste navegador.');
+        return false;
+    }
+}
+
+function applyAdminState() {
+    const babaDetails = elements.formularioBaba.closest('details');
+    const barbecueDetails = elements.formularioChurrasco.closest('details');
+    babaDetails.hidden = !isAdmin;
+    barbecueDetails.hidden = !isAdmin;
+    elements.botaoAdmin.textContent = isAdmin ? 'Sair do modo administrador' : 'Entrar como administrador';
+    elements.statusAdmin.textContent = isAdmin
+        ? 'Modo administrador ativo. Você pode registrar resultados e churrascos.'
+        : 'Modo visitante. Somente administradores podem registrar resultados e churrascos.';
+    elements.formularioBaba.querySelector('#botao-salvar-baba').disabled = !isAdmin || !state.players.length;
 }
 
 function isValidDateString(value) {
@@ -248,6 +286,11 @@ function renderMatches() {
     }
 }
 
+function calculatePerformanceRating(goals, assists) {
+    const rawRating = (Number(goals) || 0) * 2 + (Number(assists) || 0) * 1.5;
+    return Math.min(10, Number(rawRating.toFixed(1)));
+}
+
 function makePerformanceRow(player) {
     const row = document.createElement('div');
     row.className = 'linha-desempenho';
@@ -266,7 +309,18 @@ function makePerformanceRow(player) {
 
     const goals = makeStatisticInput('Gols', 'goals', '0');
     const assists = makeStatisticInput('Assist.', 'assists', '0');
-    const rating = makeStatisticInput('Nota', 'rating', '7.0', '0', '10', '0.1');
+    const rating = makeStatisticInput('Nota', 'rating', '0.0', '0', '10', '0.1');
+    rating.readOnly = true;
+    rating.setAttribute('aria-label', 'Nota calculada automaticamente por gols e assistências');
+
+    const syncRating = () => {
+        rating.value = calculatePerformanceRating(goals.value, assists.value).toFixed(1);
+    };
+
+    goals.addEventListener('input', syncRating);
+    assists.addEventListener('input', syncRating);
+    syncRating();
+
     row.append(nameLabel, goals, assists, rating);
     return row;
 }
@@ -296,7 +350,7 @@ function renderPerformanceForm() {
         .map(makePerformanceRow));
     elements.semJogadores.hidden = hasPlayers;
     elements.gradeDesempenho.hidden = !hasPlayers;
-    elements.formularioBaba.querySelector('#botao-salvar-baba').disabled = !hasPlayers;
+    elements.formularioBaba.querySelector('#botao-salvar-baba').disabled = !hasPlayers || !isAdmin;
 }
 
 function makeAnniversaryCard(player) {
@@ -557,7 +611,31 @@ function render() {
 elements.dataBaba.max = localDateString();
 elements.dataChurrasco.min = localDateString();
 loadState();
+loadAdminState();
 render();
+applyAdminState();
+
+elements.botaoAdmin.addEventListener('click', () => {
+    if (isAdmin) {
+        if (saveAdminState(false)) {
+            applyAdminState();
+            setWarning('Modo visitante ativado. Os formulários de registro estão restritos ao administrador.');
+        }
+        return;
+    }
+
+    const password = window.prompt('Digite a senha de administrador:');
+    if (password === null) return;
+    if (password !== ADMIN_PASSWORD) {
+        setWarning('Senha incorreta. Somente o administrador pode registrar resultados e churrascos.');
+        return;
+    }
+
+    if (saveAdminState(true)) {
+        applyAdminState();
+        setWarning('Modo administrador ativado.');
+    }
+});
 
 elements.seletorRodada.addEventListener('change', () => {
     renderMatches();
@@ -589,6 +667,10 @@ elements.nomeJogador.addEventListener('input', () => elements.nomeJogador.setCus
 
 elements.formularioBaba.addEventListener('submit', (event) => {
     event.preventDefault();
+    if (!isAdmin) {
+        setWarning('Somente o administrador pode registrar resultados de babas.');
+        return;
+    }
     if (!elements.formularioBaba.reportValidity()) return;
 
     const round = Number(elements.numeroRodada.value);
@@ -684,6 +766,10 @@ elements.listaElenco.addEventListener('click', (event) => {
 
 elements.formularioChurrasco.addEventListener('submit', (event) => {
     event.preventDefault();
+    if (!isAdmin) {
+        setWarning('Somente o administrador pode marcar churrascos e dividir os valores.');
+        return;
+    }
     if (!elements.formularioChurrasco.reportValidity()) return;
 
     const date = elements.dataChurrasco.value;

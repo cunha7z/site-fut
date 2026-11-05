@@ -95,8 +95,12 @@
                             <option value="paid">Já pagou</option>
                         </select>
                     </label>
-                    <button class="botao botao-amarelo botao-adicionar" type="submit">Adicionar jogador <span aria-hidden="true">→</span></button>
+                    <div class="acoes-formulario">
+                        <button class="botao botao-amarelo botao-adicionar" type="submit">Adicionar jogador <span aria-hidden="true">→</span></button>
+                        <button class="botao botao-secundario botao-admin" id="botao-admin" type="button">Entrar como admin</button>
+                    </div>
                 </form>
+                <p id="status-admin" class="status-admin" aria-live="polite">Modo visitante</p>
             </section>
 
             <div class="listas-pagamento">

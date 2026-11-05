@@ -456,12 +456,26 @@ p {
 }
 
 .acoes-perfil {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-column: 1 / -1;
+    gap: 8px;
 }
 
 .acoes-perfil .botao {
     width: 100%;
     min-height: 37px;
+}
+
+.botao-remover-jogador {
+    border-color: rgb(238 148 137 / 40%);
+    background: rgb(238 148 137 / 7%);
+    color: var(--vermelho);
+}
+
+.botao-remover-jogador:hover {
+    border-color: var(--vermelho);
+    background: rgb(238 148 137 / 13%);
 }
 
 .estado-vazio {

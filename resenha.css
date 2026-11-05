@@ -186,6 +186,31 @@ p {
     display: none;
 }
 
+.controles-admin {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: -2px 0 20px;
+}
+
+.controles-admin span {
+    color: var(--texto-suave);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.botao-contorno {
+    flex: 0 0 auto;
+    border-color: var(--borda);
+    background: transparent;
+    color: var(--texto);
+}
+
+.botao-contorno:hover {
+    border-color: rgb(242 209 61 / 55%);
+    background: rgb(242 209 61 / 7%);
+}
+
 .atalhos-resenha {
     position: sticky;
     z-index: 3;
@@ -937,6 +962,10 @@ p {
 }
 
 @media (max-width: 560px) {
+    .controles-admin {
+        align-items: flex-start;
+        flex-direction: column;
+    }
     .cabecalho-secao {
         align-items: flex-start;
         flex-direction: column;
